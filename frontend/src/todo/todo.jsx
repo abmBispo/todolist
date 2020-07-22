@@ -3,6 +3,7 @@ import PageHeader from '../template/pageHeader';
 import TodoForm from './todoForm';
 import TodoList from './todoList';
 import axios from 'axios';
+import todoForm from './todoForm';
 
 const BASE_URL = 'http://localhost:3003/api/todos';
 
@@ -19,12 +20,22 @@ export default class Todo extends React.Component {
         this.handleAdd = this.handleAdd.bind(this);
         this.refresh = this.refresh.bind(this);
         this.handleRemove = this.handleRemove.bind(this);
+        this.handleMarkAsDone = this.handleMarkAsDone.bind(this);
+        this.handleMarkAsPending = this.handleMarkAsPending.bind(this);
 
         this.refresh();
     }
 
     handleRemove(task) {
-        axios.delete(`${BASE_URL}/${task._id}`).then((res) => this.refresh())
+        axios.delete(`${BASE_URL}/${task._id}`).then((res) => this.refresh());
+    }
+
+    handleMarkAsDone(task) {
+        axios.put(`${BASE_URL}/${task._id}`, { ...task, done: true }).then((res) => this.refresh());
+    }
+
+    handleMarkAsPending(task) {
+        axios.put(`${BASE_URL}/${task._id}`, { ...task, done: false }).then((res) => this.refresh());
     }
 
     refresh() {
@@ -57,7 +68,11 @@ export default class Todo extends React.Component {
                     description={this.state.description}
                     handleChange={this.handleChange}
                     handleAdd={this.handleAdd} />
-                <TodoList list={this.state.list} handleRemove={this.handleRemove}/>
+                <TodoList
+                    list={this.state.list}
+                    handleRemove={this.handleRemove}
+                    handleMarkAsDone={this.handleMarkAsDone}
+                    handleMarkAsPending={this.handleMarkAsPending}/>
             </div>
         )
     }

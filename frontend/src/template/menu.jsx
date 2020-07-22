@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default (props) => (
-    <nav className='navbar navbar-dark bg-dark'>
+    <nav className='navbar navbar-dark bg-dark mt-3'>
         <div className='container'>
             <div className='navbar-header'>
                 <a className='navbar-brand' href='#'>

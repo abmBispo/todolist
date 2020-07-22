@@ -4,7 +4,7 @@ import IconButton from '../template/iconButton';
 export default (props) => (
     <div role='form' className='todoForm'>
         <div className='row'>
-            <div className='col-12 col-md-10'>
+            <div className='col-12 col-md-11'>
                 <input type='text'
                     className='form-control'
                     name="description"
@@ -13,7 +13,7 @@ export default (props) => (
                     onChange={(e) => props.handleChange(e) }
                     value={props.description} />
             </div>
-            <div className='col-12 col-md-2 text-right'>
+            <div className='col-12 col-md-1'>
                 <IconButton style='success' icon='plus' onClick={props.handleAdd} />
             </div>
         </div>

@@ -1,0 +1,8 @@
+.btn {
+    margin-right: 5px;
+}
+
+.done-task {
+    color: #777;
+    text-decoration: line-through;
+}

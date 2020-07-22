@@ -7,10 +7,20 @@ export default (props) => {
         return list.map((task) => {
             return (
                 <tr key={task._id}>
-                    <td>
+                    <td className={ task.done ? 'done-task' : ''}>
                         {task.description}
                     </td>
-                    <td>
+                    <td className='text-right'>
+                        <IconButton
+                            icon='check'
+                            style='success'
+                            onClick={() => props.handleMarkAsDone(task)}
+                            hide={task.done} />
+                        <IconButton
+                            icon='undo'
+                            style='warning'
+                            onClick={() => props.handleMarkAsPending(task)}
+                            hide={!task.done} />
                         <IconButton
                             icon='trash-o'
                             style='danger'
@@ -21,13 +31,12 @@ export default (props) => {
     };
 
     return (
-        <div>
-            <h2>Todo List</h2>
+        <div className='mt-5'>
             <table className='table'>
                 <thead>
                     <tr>
                         <td>Task</td>
-                        <td>Actions</td>
+                        <td className='text-right'>Actions</td>
                     </tr>
                 </thead>
                 <tbody>
