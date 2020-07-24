@@ -2,78 +2,11 @@ import React from 'react';
 import PageHeader from '../template/pageHeader';
 import TodoForm from './todoForm';
 import TodoList from './todoList';
-import axios from 'axios';
-import todoForm from './todoForm';
 
-const BASE_URL = 'http://localhost:3003/api/todos';
-
-export default class Todo extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            description: '',
-            list: []
-        }
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleAdd = this.handleAdd.bind(this);
-        this.refresh = this.refresh.bind(this);
-        this.handleRemove = this.handleRemove.bind(this);
-        this.handleMarkAsDone = this.handleMarkAsDone.bind(this);
-        this.handleMarkAsPending = this.handleMarkAsPending.bind(this);
-
-        this.refresh();
-    }
-
-    handleRemove(task) {
-        axios.delete(`${BASE_URL}/${task._id}`).then((res) => this.refresh());
-    }
-
-    handleMarkAsDone(task) {
-        axios.put(`${BASE_URL}/${task._id}`, { ...task, done: true }).then((res) => this.refresh());
-    }
-
-    handleMarkAsPending(task) {
-        axios.put(`${BASE_URL}/${task._id}`, { ...task, done: false }).then((res) => this.refresh());
-    }
-
-    refresh() {
-        axios.get(`${BASE_URL}?sort=-createdAt`).then(res => {
-            this.setState({
-                ...this.state,
-                description: '',
-                list: res.data
-            })
-        });
-    }
-
-    handleChange(e) {
-        this.setState({
-            ...this.state,
-            description: e.target.value
-        });
-    }
-
-    handleAdd() {
-        const description = this.state.description
-        axios.post(BASE_URL, { description }).then((response) => this.refresh());
-    }
-
-    render() {
-        return (
-            <div>
-                <PageHeader name='Todo' small='list' />
-                <TodoForm
-                    description={this.state.description}
-                    handleChange={this.handleChange}
-                    handleAdd={this.handleAdd} />
-                <TodoList
-                    list={this.state.list}
-                    handleRemove={this.handleRemove}
-                    handleMarkAsDone={this.handleMarkAsDone}
-                    handleMarkAsPending={this.handleMarkAsPending}/>
-            </div>
-        )
-    }
-}
+export default () => (
+    <div>
+        <PageHeader name='Todo' small='list' />
+        <TodoForm />
+        <TodoList />
+    </div>
+);
