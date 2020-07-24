@@ -15,14 +15,27 @@ export const createTask = (description) => {
     return (dispatch) => {
         axios.post(URL, { description })
             .then((res) => dispatch({ type: 'CREATE_TASK' }))
-            .then((res) => dispatch(loadTasks()))
+            .then((res) => dispatch(loadTasks()));
     }
 }
 
 export const deleteTask = (taskId) => {
     return (dispatch) => {
         axios.delete(`${URL}/${taskId}`)
-            .then((res) => dispatch({ type: 'DELETE_TASK' }))
-            .then((res) => dispatch(loadTasks()))
+            .then((res) => dispatch(loadTasks()));
+    }
+}
+
+export const markAsDone = (task) => {
+    return (dispatch) => {
+        axios.put(`${URL}/${task._id}`, { ...task, done: true })
+            .then((res) => dispatch(loadTasks()));
+    }
+}
+
+export const markAsUndone = (task) => {
+    return (dispatch) => {
+        axios.put(`${URL}/${task._id}`, { ...task, done: false })
+            .then((res) => dispatch(loadTasks()));
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import IconButton from '../template/iconButton';
-import { loadTasks, deleteTask } from './todoActions';
+import { loadTasks, deleteTask, markAsDone, markAsUndone } from './todoActions';
 import { bindActionCreators } from 'redux';
 
 class TodoList extends React.Component {
@@ -25,12 +25,12 @@ class TodoList extends React.Component {
                     <IconButton
                         icon='check'
                         style='success'
-                        onClick={() => this.props.handleMarkAsDone(task)}
+                        onClick={() => this.props.markAsDone(task)}
                         hide={task.done} />
                     <IconButton
                         icon='undo'
                         style='warning'
-                        onClick={() => this.props.handleMarkAsPending(task)}
+                        onClick={() => this.props.markAsUndone(task)}
                         hide={!task.done} />
                     <IconButton
                         icon='trash-o'
@@ -61,6 +61,6 @@ class TodoList extends React.Component {
 };
 
 const mapStateToProps = (state) => ({ list: state.todo.list });
-const mapDispatchToProps = (dispatch) => bindActionCreators({ loadTasks, deleteTask }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ loadTasks, deleteTask, markAsDone, markAsUndone }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
